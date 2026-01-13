@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from '../assets/logo.png'
 import Search from './Search'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaRegCircleUser } from "react-icons/fa6";
 import useMobile from '../hooks/useMobile';
 import { FaOpencart } from "react-icons/fa";
@@ -10,6 +10,11 @@ const Header = () => {
   const [isMobile] = useMobile()
   const location = useLocation()
   const isSearchPage = location.pathname === "/search"
+  const navigate = useNavigate()
+
+  const redirectTologinPage = () => {
+    navigate("/login")
+  }
 
   console.log("location", location)
   console.log("isSearchPage", isSearchPage)
@@ -17,7 +22,7 @@ const Header = () => {
 
   return (
     <header className='h-24 lg:h-20 lg:shadow-md sticky top-0
-     flex flex-col justify-center items-center gap-1 '>
+     flex flex-col justify-center items-center gap-1  bg-white'>
       {
         !(isSearchPage && isMobile) && (
           <div className='container mx-auto flex items-center px-2 justify-between  lg:h-full'>
@@ -40,20 +45,21 @@ const Header = () => {
             {/* login and add my cart */}
             <div className=''>
               {/* user icons display in only mobile version */}
-              <button className='text-neutral-500 lg:hidden p-2'>
+              <button className='text-neutral-500 lg:hidden p-2 cursor-pointer'>
                 <FaRegCircleUser size={26} />
               </button>
               {/* Desktop part */}
               <div className='hidden lg:flex items-center gap-10'>
-                <Link to={"/login"}>login</Link>
-                <button className='flex items-center gap-2 bg-secondary-200 px-2 py-1 rounded text-white'>
+                {/* <Link to={"/login"}>login</Link> */}
+                <button className='cursor-pointer text-lg px-2' onClick={redirectTologinPage}>Login</button>
+                <button className='flex items-center gap-2 bg-secondary-200 hover:bg-green-700 px-3 py-3 rounded text-white cursor-pointer'>
                   {/* add to card icons */}
-                  <div>
-                    <FaOpencart size={25} />
+                  <div className='animate-bounce'>
+                    <FaOpencart size={30} />
                   </div>
-                  <div>
-                    <p>1 items</p>
-                    <p>total price</p>
+                  <div className='font-semibold'>
+                    <p>My Cart</p>
+                    
                   </div>
                 </button>
               </div>
