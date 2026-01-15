@@ -21,8 +21,8 @@ const Header = () => {
   console.log("ismobile", isMobile)
 
   return (
-    <header className='h-24 lg:h-20 lg:shadow-md sticky top-0
-     flex flex-col justify-center items-center gap-1  bg-white'>
+    <header className='h-20 lg:h-18 lg:shadow-md sticky top-0
+     flex flex-col justify-center items-center gap-1  bg-white z-50'>
       {
         !(isSearchPage && isMobile) && (
           <div className='container mx-auto flex items-center px-2 justify-between  lg:h-full'>
@@ -49,15 +49,15 @@ const Header = () => {
                 <FaRegCircleUser size={26} />
               </button>
               {/* Desktop part */}
-              <div className='hidden lg:flex items-center gap-10'>
+              <div className='hidden lg:flex items-center gap-5'>
                 {/* <Link to={"/login"}>login</Link> */}
                 <button className='cursor-pointer text-lg px-2' onClick={redirectTologinPage}>Login</button>
-                <button className='flex items-center gap-2 bg-secondary-200 hover:bg-green-700 px-3 py-3 rounded text-white cursor-pointer'>
+                <button className='flex items-center gap-1 bg-secondary-200 hover:bg-green-700 px-2 py-2 rounded text-white cursor-pointer'>
                   {/* add to card icons */}
                   <div className='animate-bounce'>
-                    <FaOpencart size={30} />
+                    <FaOpencart size={20} />
                   </div>
-                  <div className='font-semibold'>
+                  <div className='font-medium'>
                     <p>My Cart</p>
                     
                   </div>
