@@ -1,125 +1,140 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
-import Axios from "../utils/Axios";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import SummaryApi from "../common/SummaryApi";
+import Axios from "../utils/Axios";
+import AxiosToastError from "../utils/AxiosToastError";
 
 const OtpVerification = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const email = state?.email;
+  const location = useLocation();
+  const email = location?.state?.email;
 
-  const [data, setData] = useState(["","","","","",""]);
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(["", "", "", "", "", ""]);
+  const inputRef = useRef([]);
 
-  const valideValue = data.every(el => el)
+  useEffect(() => {
+    if (!email) {
+      navigate("/forgot-password");
+    }
+  }, [email, navigate]);
 
-  const handleVerifyOtp = async (e) => {
+  const valideValue = data.every(el => el);
+
+  /* ================= VERIFY OTP ================= */
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!otp || otp.length !== 6) {
-      toast.error("Please enter a valid 6-digit OTP");
-      return;
-    }
-
     try {
-      setLoading(true);
-
       const response = await Axios({
         ...SummaryApi.verify_forgot_password_otp,
-        data: data
+        data: {
+          otp: data.join(""),
+          email: email
+        }
       });
 
       if (response.data.error) {
         toast.error(response.data.message);
-        setLoading(false);
         return;
       }
 
-      toast.success("OTP verified successfully");
-      navigate("/reset-password");
-
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setData(["", "", "", "", "", ""]);
+        navigate("/reset-password",{
+          state:{
+            data : response.data,
+            email : email
+          }
+        });
+      }
     } catch (error) {
-      toast.error("Invalid or expired OTP");
-    } finally {
-      setLoading(false);
+      AxiosToastError(error);
     }
   };
 
+  /* ================= RESEND OTP ================= */
   const handleResendOtp = async () => {
     try {
       const response = await Axios({
-        ...SummaryApi.forgotPassword,
+        ...SummaryApi.forgot_password,
         data: { email }
       });
 
       if (response.data.success) {
-        toast.success(response.data.message)
-        setData(["","","","","",""])
+        toast.success("OTP sent successfully");
+        setData(["", "", "", "", "", ""]);
+        inputRef.current[0].focus();
       }
-    } catch {
-      toast.error("Unable to resend OTP");
+    } catch (error) {
+      AxiosToastError(error);
     }
   };
 
   return (
     <section className="w-full min-h-screen bg-[#e6f4f1] flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg px-8 py-10 relative overflow-hidden">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg px-8 py-10">
+        <h2 className="text-2xl font-semibold text-gray-800">
+          Verify OTP
+        </h2>
 
-        {/* Soft background */}
-        <div className="absolute -top-32 -right-32 w-[300px] h-[300px] rounded-full bg-[#90e0d5] opacity-30"></div>
-        <div className="absolute -bottom-40 -left-40 w-[350px] h-[350px] rounded-full bg-[#7ed9cc] opacity-30"></div>
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <label className="text-sm text-gray-500">
+            Enter your OTP
+          </label>
 
-        <div className="relative z-10">
-          <h2 className="text-2xl font-semibold text-gray-800">
-            Verify OTP
-          </h2>
-          <p className="text-sm text-gray-500 mt-1">
-            Enter the 6-digit OTP sent to
-            <br />
-            <span className="font-medium">{email}</span>
-          </p>
+          {/* OTP BOXES */}
+          <div className="flex justify-between gap-2 mt-2">
+            {data.map((value, index) => (
+              <input
+                key={"otp-" + index}
+                type="text"
+                ref={(ref) => (inputRef.current[index] = ref)}
+                value={data[index]}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
 
-          <form onSubmit={handleVerifyOtp} className="mt-8 space-y-4">
-            <input
-              type="text"
-              maxLength={6}
-              value={otp}
-              onChange={(e) =>
-                setOtp(e.target.value.replace(/\D/g, ""))
-              }
-              placeholder="Enter OTP"
-              className="w-full text-center tracking-widest text-lg rounded-full bg-[#f3fbfa] px-4 py-2.5 outline-none focus:ring-2 focus:ring-teal-300"
-            />
+                  const newData = [...data];
+                  newData[index] = value;
+                  setData(newData);
 
-            <button
-              disabled={valideValue}
-              className={`w-full py-2.5 rounded-full font-semibold text-white transition ${
-                valideValue
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-teal-500 hover:bg-teal-600"
-              }`}
-            >
-              {loading ? "Verifying..." : "Verify OTP"}
-            </button>
-          </form>
-
-          <div className="text-center mt-4 text-sm">
-            Didn’t receive OTP?{" "}
-            <button
-              onClick={handleResendOtp}
-              className="text-teal-500 font-medium hover:underline"
-            >
-              Resend
-            </button>
+                  if (value && index < 5) {
+                    inputRef.current[index + 1].focus();
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Backspace" && !data[index] && index > 0) {
+                    inputRef.current[index - 1].focus();
+                  }
+                }}
+                maxLength={1}
+                className="w-12 h-12 text-center text-lg font-semibold rounded-xl bg-[#f3fbfa] outline-none focus:ring-2 focus:ring-teal-300"
+              />
+            ))}
           </div>
 
-          <p className="text-center mt-6 text-sm">
-            <Link to="/login" className="text-teal-500 hover:underline">
-              Back to Login
-            </Link>
-          </p>
-        </div>
+          <button
+            disabled={!valideValue}
+            className={`w-full py-2.5 rounded-full font-semibold text-white transition ${
+              valideValue
+                ? "bg-teal-500 hover:bg-teal-600"
+                : "bg-teal-400 cursor-not-allowed"
+            }`}
+          >
+            Verify OTP
+          </button>
+        </form>
+
+        <p className="text-sm text-center mt-6">
+          Didn’t receive OTP?{" "}
+          <button
+            onClick={handleResendOtp}
+            className="text-teal-500 hover:underline font-medium"
+          >
+            Resend OTP
+          </button>
+        </p>
       </div>
     </section>
   );

@@ -9,10 +9,10 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const [data, setData] = useState({
     email: ""
-   
+
   });
 
-   const handleChange = (e) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({
       ...prev,
@@ -43,13 +43,15 @@ const ForgotPassword = () => {
 
       if (response.data.success) {
         toast.success(response.data.message)
+        navigate("/verification-otp", {
+          state: data
+        });
         setData({
-          email : ""
+          email: ""
         })
-        navigate("/verification-otp");
       }
     } catch (error) {
-        AxiosToastError(error)
+      AxiosToastError(error)
     }
   };
 
@@ -73,16 +75,16 @@ const ForgotPassword = () => {
             className="w-full rounded-full bg-[#f3fbfa] px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-teal-300"
           />
           <button
-              disabled={!valideValue}
-              className={`w-full py-2.5 rounded-full font-semibold text-white transition ${valideValue
-                  ? "bg-teal-500 hover:bg-teal-600"
-                  : "bg-teal-400 cursor-not-allowed"
-                }`}
-            >
-              Send OTP
-            </button>
+            disabled={!valideValue}
+            className={`w-full py-2.5 rounded-full font-semibold text-white transition ${valideValue
+              ? "bg-teal-500 hover:bg-teal-600"
+              : "bg-teal-400 cursor-not-allowed"
+              }`}
+          >
+            Send OTP
+          </button>
 
-          
+
         </form>
 
         <p className="text-sm text-center mt-6">

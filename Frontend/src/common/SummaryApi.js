@@ -21,6 +21,12 @@ const SummaryApi = {
     {
         url: '/api/user/verify-forgot-password-otp',
         method: 'put'
+    },
+    reset_password :
+    {
+        url : '/api/user/reset-password',
+        method: 'put'
+
     }
 }
 
