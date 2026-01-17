@@ -125,7 +125,7 @@ const Login = () => {
               disabled={!validValue}
               className={`w-full py-2.5 rounded-full font-semibold text-white transition ${validValue
                   ? "bg-teal-500 hover:bg-teal-600"
-                  : "bg-gray-400 cursor-not-allowed"
+                  : "bg-teal-400 cursor-not-allowed"
                 }`}
             >
               Login
