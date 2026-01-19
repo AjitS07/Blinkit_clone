@@ -485,3 +485,29 @@ export async function refreshToken(request,response){
 
     }
 }
+
+//get login user details 
+export async function userDetails(request,response) {
+    try {
+        const userId = request.userId
+        const user = await UserModel.findById(userId)
+
+        return response.json({
+            message : 'user details',
+            data : user,
+            error : false,
+            success : true
+
+        })
+    }
+    catch (error){
+
+        return response.status(500).json({
+            message : "something is wrong",
+            error : true,
+            success : false
+        })
+
+    }
+    
+}
