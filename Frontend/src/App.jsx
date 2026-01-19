@@ -4,27 +4,46 @@ import './App.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import toast, { Toaster } from 'react-hot-toast'
+import fetchUserDetails from './utils/fetchUserDetails'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { setUserDetails } from './store/userSlice'
+
+
 
 function App() {
- 
+
+  const dispatch = useDispatch()
+  const fetchUser = async () => {
+    const userData = await fetchUserDetails()
+
+    dispatch(setUserDetails(userData.data))
+  }
+
+
+  useEffect(() => {
+    fetchUser()
+
+  }, [])
+
 
   return (
-  
-   <>
-   <div className='min-h-screen flex flex-col'>
 
-    <Header/>
-   < main  className='flex-grow '>
-      <Outlet/>
+    <>
+      <div className='min-h-screen flex flex-col'>
 
-   </main>
-   <Footer/>
-   <Toaster/>
-   
-   </div>
-   
-   </>
-  
+        <Header />
+        < main className='flex-grow '>
+          <Outlet />
+
+        </main>
+        <Footer />
+        <Toaster />
+
+      </div>
+
+    </>
+
   )
 }
 

@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/logo.png'
 import Search from './Search'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FaRegCircleUser } from "react-icons/fa6";
 import useMobile from '../hooks/useMobile';
 import { FaOpencart } from "react-icons/fa";
+import { useSelector } from 'react-redux'
+import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
+import UserMenu from './UserMenu';
 
 const Header = () => {
   const [isMobile] = useMobile()
   const location = useLocation()
   const isSearchPage = location.pathname === "/search"
   const navigate = useNavigate()
+
+  const user = useSelector((state) => state?.user)
+
+  const [openUserMenu, setOpenUserMenu] = useState(false)
+
+  console.log('user from store ', user)
 
   const redirectTologinPage = () => {
     navigate("/login")
@@ -51,7 +60,29 @@ const Header = () => {
               {/* Desktop part */}
               <div className='hidden lg:flex items-center gap-5'>
                 {/* <Link to={"/login"}>login</Link> */}
-                <button className='cursor-pointer text-lg px-2' onClick={redirectTologinPage}>Login</button>
+                {
+                  user?._id ? (
+                    <div className='relative'>
+                      <div className='flex items-center gap-2'>
+                        <p>Account</p>
+                        <TiArrowSortedDown />
+                        {/* <TiArrowSortedUp/> */}
+
+
+                      </div>
+                      <div className='absolute right-0  top-12'>
+                        <div className='bg-sky-100 rounded p-4 min-w-52 lg:shadow-lg'>
+                          <UserMenu />
+
+                        </div>
+
+                      </div>
+                    </div>
+                  ) : (
+
+                    <button className='cursor-pointer text-lg px-2' onClick={redirectTologinPage}>Login</button>
+                  )
+                }
                 <button className='flex items-center gap-1 bg-secondary-200 hover:bg-green-700 px-2 py-2 rounded text-white cursor-pointer'>
                   {/* add to card icons */}
                   <div className='animate-bounce'>
@@ -59,7 +90,7 @@ const Header = () => {
                   </div>
                   <div className='font-medium'>
                     <p>My Cart</p>
-                    
+
                   </div>
                 </button>
               </div>

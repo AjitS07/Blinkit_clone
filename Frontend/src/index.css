@@ -10,7 +10,7 @@ body {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  @apply bg-blue-50
+  @apply bg-blue-50 text-neutral-700
 }
 @theme {
   --color-primary-100: #ffc929;
