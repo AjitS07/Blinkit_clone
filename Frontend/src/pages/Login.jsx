@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import SummaryApi from "../common/SummaryApi";
 import Axios from "../utils/Axios";
+import { useDispatch } from 'react-redux';
+import { setUserDetails } from '../store/userSlice';
+import fetchUserDetails from '../utils/fetchUserDetails';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,7 +18,9 @@ const Login = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-   
+  
+    const dispatch = useDispatch()
+
 
   const handleChange = async (e) => {
     const { name, value } = e.target;
@@ -26,7 +31,7 @@ const Login = () => {
   };
 
   const validValue = Object.values(data).every(el => el);
- 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,25 +53,23 @@ const Login = () => {
       }
       if (response.data.success) {
         toast.success(response.data.message)
-        localStorage.setItem('accesstoken',response.data.data.accesstoken)
-        localStorage.setItem('refreshToken',response.data.data.refreshToken)
+        localStorage.setItem('accesstoken', response.data.data.accessToken)
+        localStorage.setItem('refreshToken', response.data.data.refreshToken)
+
+        const userDetails = await fetchUserDetails()
+        dispatch(setUserDetails(userDetails.data))
         setData({
-          email : "",
-          password : "",
+          email: "",
+          password: "",
         })
-        
+
         navigate("/")
       }
 
     } catch (error) {
-       toast.error("Something went wrong");
+       AxiosToastError(error)
 
     }
-
-    // 🔐 API CALL HERE
-    console.log("Login data:", data);
-
-    // navigate("/"); // after success
   };
 
   return (
@@ -130,8 +133,8 @@ const Login = () => {
             <button
               disabled={!validValue}
               className={`w-full py-2.5 rounded-full font-semibold text-white transition ${validValue
-                  ? "bg-teal-500 hover:bg-teal-600"
-                  : "bg-teal-400 cursor-not-allowed"
+                ? "bg-teal-500 hover:bg-teal-600"
+                : "bg-teal-400 cursor-not-allowed"
                 }`}
             >
               Login

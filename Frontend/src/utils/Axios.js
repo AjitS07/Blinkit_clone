@@ -13,8 +13,6 @@ Axios.interceptors.request.use(
             config.headers.Authorization = `Bearer ${accessToken}`
         }
         return config
-
-
     },
     (error) => {
         return Promise.reject(error)
@@ -29,8 +27,8 @@ Axios.interceptors.request.use(
     },
     async (error) => {
         let originRequest = error.config
-        if (error.response.status === 401 && !originRequest.retry) {
-            originRequest.retry = true
+        if (error.response.status === 401 && !originRequest._retry) {
+            originRequest._retry = true
             const refreshToken = localStorage.getItem("refreshToken")
 
             if (refreshToken) {
@@ -59,7 +57,7 @@ const refreshAccessToken = async (refreshToken) => {
         const accessToken = response.data.data.accessToken
         localStorage.setItem('accesstoken',accessToken)
         return accessToken
-        console.log(response)
+        
     } catch(error) {
         console.log(error)
 

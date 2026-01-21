@@ -14,17 +14,23 @@ import { setUserDetails } from './store/userSlice'
 function App() {
 
   const dispatch = useDispatch()
+  
+
   const fetchUser = async () => {
     const userData = await fetchUserDetails()
-
+    if(userData){
     dispatch(setUserDetails(userData.data))
+    }
   }
 
 
   useEffect(() => {
-    fetchUser()
+  const token = localStorage.getItem("accesstoken");
 
-  }, [])
+  if (token) {
+    fetchUser();   // ✔ sirf login hone pe
+  }
+}, []);
 
 
   return (

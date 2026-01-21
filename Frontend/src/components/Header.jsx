@@ -19,15 +19,15 @@ const Header = () => {
 
   const [openUserMenu, setOpenUserMenu] = useState(false)
 
-  console.log('user from store ', user)
+  // console.log('user from store ', user)
 
   const redirectTologinPage = () => {
     navigate("/login")
   }
 
-  console.log("location", location)
-  console.log("isSearchPage", isSearchPage)
-  console.log("ismobile", isMobile)
+  // console.log("location", location)
+  // console.log("isSearchPage", isSearchPage)
+  // console.log("ismobile", isMobile)
 
   return (
     <header className='h-20 lg:h-18 lg:shadow-md sticky top-0
@@ -63,20 +63,28 @@ const Header = () => {
                 {
                   user?._id ? (
                     <div className='relative'>
-                      <div className='flex items-center gap-2'>
+                      <div onClick={() => setOpenUserMenu(preve => !preve)} className='flex select-none items-center gap-1 cursor-pointer'>
                         <p>Account</p>
-                        <TiArrowSortedDown />
-                        {/* <TiArrowSortedUp/> */}
+                        {
+                          openUserMenu ? (
+                            <TiArrowSortedUp size={20} />
+
+                          ) : (
+
+                            <TiArrowSortedDown size={20} />
+                          )
+                        }
+
 
 
                       </div>
-                      <div className='absolute right-0  top-12'>
-                        <div className='bg-sky-100 rounded p-4 min-w-52 lg:shadow-lg'>
-                          <UserMenu />
-
+                      {openUserMenu && (
+                        <div className="absolute right-0 top-12 z-50">
+                          <div className="bg-white rounded-lg p-4 shadow-lg border border-gray-100">
+                            <UserMenu />
+                          </div>
                         </div>
-
-                      </div>
+                      )}
                     </div>
                   ) : (
 

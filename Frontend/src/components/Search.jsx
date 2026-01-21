@@ -24,7 +24,7 @@ const Search = () => {
 
     navigate("/search")
   }
-  console.log("searchPage", isSearchPage)
+  // console.log("searchPage", isSearchPage)
   return (
     <div className='w-full border border-gray-200  min-w-[300px] lg:min-w-[420px] h-10 lg:h-11 rounded-lg overflow-hidden flex items-center text-neutral-500 group focus-within:border-primary-200 '>
       <div>

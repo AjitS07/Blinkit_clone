@@ -8,6 +8,7 @@ import ForgotPassword from "../pages/ForgotPassword";
 import OtpVerification from "../pages/OtpVerification";
 import ResetPassword from "../pages/ResetPassword";
 
+
 const router = createBrowserRouter([
     {
         path : "/",
