@@ -8,8 +8,8 @@ const fetchUserDetails = async () => {
         return response.data
 
     } catch (error) {
-        // console.log(error)
-        console.log("fetchUserDetails error:", error?.response?.data || error);
+        console.log(error)
+        
        
 
     }

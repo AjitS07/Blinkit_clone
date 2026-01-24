@@ -24,6 +24,20 @@ const Header = () => {
   const redirectTologinPage = () => {
     navigate("/login")
   }
+  const handleCloseUserMenu = () => {
+    setOpenUserMenu(false)
+  }
+
+  const handleMobileUser = () => {
+    if (!user._id) {
+      navigate("/login")
+      return
+    }
+    
+    navigate("/userMobile")
+
+
+  }
 
   // console.log("location", location)
   // console.log("isSearchPage", isSearchPage)
@@ -38,12 +52,12 @@ const Header = () => {
             {/* Logo */}
             <div className='h-full'>
               <Link to={"/"} className='h-full flex justify-center items-center'>
-                {/* <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
+                <h1 className="text-2xl md:text-4xl oxygen-bold tracking-tight ">
             <span className="text-yellow-400">Blinkit</span>
             <span className="text-green-500">_clone</span>
-            </h1> */}
-                <img src={logo} alt="logo" width={170} height={60} className='hidden lg:block' />
-                <img src={logo} alt="logo" width={170} height={60} className='lg:hidden px-2' />
+            </h1>
+                {/* <img src={logo} alt="logo" width={170} height={60} className='hidden lg:block' />
+                <img src={logo} alt="logo" width={170} height={60} className='lg:hidden px-2' /> */}
               </Link>
             </div>
             {/* search */}
@@ -54,9 +68,31 @@ const Header = () => {
             {/* login and add my cart */}
             <div className=''>
               {/* user icons display in only mobile version */}
-              <button className='text-neutral-500 lg:hidden p-2 cursor-pointer'>
+              {/* <button className='text-neutral-500 lg:hidden p-2 cursor-pointer' onClick={handleMobileUser}>
                 <FaRegCircleUser size={26} />
+              </button> */}
+              <button
+                onClick={handleMobileUser}
+                className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full bg-neutral-200 text-neutral-500"
+              >
+                {user?._id ? (
+                  user?.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.name}
+                      className="w-full h-full rounded-full object-cover"
+                    />
+                  ) : (
+                    <span className="font-semibold uppercase">
+                      {user?.name?.charAt(0)}
+                    </span>
+                  )
+                ) : (
+                  <FaRegCircleUser size={26} />
+                )}
               </button>
+
+
               {/* Desktop part */}
               <div className='hidden lg:flex items-center gap-5'>
                 {/* <Link to={"/login"}>login</Link> */}
@@ -81,7 +117,7 @@ const Header = () => {
                       {openUserMenu && (
                         <div className="absolute right-0 top-12 z-50">
                           <div className="bg-white rounded-lg p-4 shadow-lg border border-gray-100">
-                            <UserMenu />
+                            <UserMenu close={handleCloseUserMenu} />
                           </div>
                         </div>
                       )}

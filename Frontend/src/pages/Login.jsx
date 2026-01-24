@@ -8,6 +8,7 @@ import Axios from "../utils/Axios";
 import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../store/userSlice';
 import fetchUserDetails from '../utils/fetchUserDetails';
+import AxiosToastError from "../utils/AxiosToastError";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,8 +19,8 @@ const Login = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  
-    const dispatch = useDispatch()
+
+  const dispatch = useDispatch()
 
 
   const handleChange = async (e) => {
@@ -53,7 +54,7 @@ const Login = () => {
       }
       if (response.data.success) {
         toast.success(response.data.message)
-        localStorage.setItem('accesstoken', response.data.data.accessToken)
+        localStorage.setItem('accesstoken', response.data.data.accesstoken)
         localStorage.setItem('refreshToken', response.data.data.refreshToken)
 
         const userDetails = await fetchUserDetails()
@@ -67,7 +68,8 @@ const Login = () => {
       }
 
     } catch (error) {
-       AxiosToastError(error)
+
+      AxiosToastError(error)
 
     }
   };
