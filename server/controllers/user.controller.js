@@ -227,6 +227,8 @@ export async function uploadAvatar(request, response) {
 
         return response.status(200).json({
             message: "Avatar uploaded successfully",
+            success : true,
+            error : false,
             data: {
                 _id: userId,
                 avatar: upload.url
@@ -437,7 +439,7 @@ export async function resetpassword(request, response) {
 
 export async function refreshToken(request, response) {
     try {
-        const refreshToken = request.cookies.refreshToken || request?.header?.authorization?.split(" ")[1] // "bearer token "
+        const refreshToken = request.cookies.refreshToken || request?.headers?.authorization?.split(" ")[1] // "bearer token "
 
         if (!refreshToken) {
             return response.status(401).json({
