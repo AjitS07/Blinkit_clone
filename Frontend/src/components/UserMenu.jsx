@@ -9,6 +9,10 @@ import { logout } from "../store/userSlice";
 import toast from "react-hot-toast";
 import AxiosToastError from "../utils/AxiosToastError";
 import { ImProfile } from "react-icons/im";
+import { AiOutlineProduct } from "react-icons/ai";
+import { MdCategory } from "react-icons/md";
+import { BiSolidCategory } from "react-icons/bi";
+import { IoMdCloudUpload } from "react-icons/io";
 
 const UserMenu = ({ close }) => {
     const user = useSelector((state) => state.user);
@@ -65,6 +69,41 @@ const UserMenu = ({ close }) => {
 
             {/* Menu Links */}
             <div className="flex flex-col text-sm">
+                 <Link
+                    onClick={handleClose}
+                    to="/dashboard/category"
+                    className="flex items-center gap-2 px-2 py-2 rounded hover:bg-gray-100 hover:text-teal-600 transition"
+                >
+                    <MdCategory size={16} />
+                    Category
+                </Link>
+                 <Link
+                    onClick={handleClose}
+                    to="/dashboard/subcategory"
+                    className="flex items-center gap-2 px-2 py-2 rounded hover:bg-gray-100 hover:text-teal-600 transition"
+                >
+                    <BiSolidCategory size={16} />
+                    Sub Category
+                </Link>
+                 <Link
+                    onClick={handleClose}
+                    to="/dashboard/uploadproduct"
+                    className="flex items-center gap-2 px-2 py-2 rounded hover:bg-gray-100 hover:text-teal-600 transition"
+                >
+                    <IoMdCloudUpload  size={16} />
+                    Upload Product
+                </Link>
+                <Link
+                    onClick={handleClose}
+                    to="/dashboard/product"
+                    className="flex items-center gap-2 px-2 py-2 rounded hover:bg-gray-100 hover:text-teal-600 transition"
+                >
+                    <AiOutlineProduct size={16} />
+                    Product
+                </Link>
+
+
+
                 <Link
                     onClick={handleClose}
                     to="/dashboard/myorders"
