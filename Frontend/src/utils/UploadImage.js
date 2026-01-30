@@ -1,5 +1,5 @@
 import SummaryApi from '../common/SummaryApi'
-import Axios from '../utils/Axios'
+import Axios from '../utils/Axios.js'
 const uploadImage = async(image)=>{
     try {
         const formData = new FormData()
@@ -9,7 +9,7 @@ const uploadImage = async(image)=>{
             data :formData
         })
 
-        return response
+        return response.data
     } catch (error) {
         return error
     }

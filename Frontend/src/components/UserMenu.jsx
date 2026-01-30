@@ -51,9 +51,21 @@ const UserMenu = ({ close }) => {
         <div className="w-56 text-gray-800">
             {/* User Info */}
             <div className="flex items-center gap-3" >
-                <div className="h-10 w-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-semibold uppercase">
-                    {user?.name?.charAt(0) || "U"}
+                              
+                <div className="h-10 w-10 rounded-full bg-teal-600 text-white flex items-center justify-center font-semibold uppercase overflow-hidden">
+                    {user?.avatar ? (
+                        <img
+                            src={user.avatar}
+                            alt={user.name || "User"}
+                            className="h-full w-full object-cover"
+                        />
+                    ) : (
+                        <span>
+                            {user?.name?.charAt(0) || "U"}
+                        </span>
+                    )}
                 </div>
+
                 <div>
                     <p className="text-sm font-semibold leading-none">
                         {user?.name || "User"}
@@ -69,7 +81,7 @@ const UserMenu = ({ close }) => {
 
             {/* Menu Links */}
             <div className="flex flex-col text-sm">
-                 <Link
+                <Link
                     onClick={handleClose}
                     to="/dashboard/category"
                     className="flex items-center gap-2 px-2 py-2 rounded hover:bg-gray-100 hover:text-teal-600 transition"
@@ -77,7 +89,7 @@ const UserMenu = ({ close }) => {
                     <MdCategory size={16} />
                     Category
                 </Link>
-                 <Link
+                <Link
                     onClick={handleClose}
                     to="/dashboard/subcategory"
                     className="flex items-center gap-2 px-2 py-2 rounded hover:bg-gray-100 hover:text-teal-600 transition"
@@ -85,12 +97,12 @@ const UserMenu = ({ close }) => {
                     <BiSolidCategory size={16} />
                     Sub Category
                 </Link>
-                 <Link
+                <Link
                     onClick={handleClose}
                     to="/dashboard/uploadproduct"
                     className="flex items-center gap-2 px-2 py-2 rounded hover:bg-gray-100 hover:text-teal-600 transition"
                 >
-                    <IoMdCloudUpload  size={16} />
+                    <IoMdCloudUpload size={16} />
                     Upload Product
                 </Link>
                 <Link

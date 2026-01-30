@@ -12,10 +12,10 @@ const Profile = () => {
     const [openDetailsEdit, setOpenDetailsEdit] = useState(false)
 
     return (
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-5xl mx-auto h-full p-4">
 
             {/* MAIN LAYOUT */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-start p-4">
 
                 {/* ================= LEFT : AVATAR ================= */}
                 <div className="flex flex-col items-center lg:items-start">
