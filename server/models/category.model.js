@@ -9,9 +9,13 @@ const categorySchema = new mongoose.Schema({
     image : {
         type : String,
         default : ""
+    },
+    editDate : {
+        type:Date,
+        default : null
     }
 },{
-    timeseries : true
+    timestamps : true
 })
 
 const CategoryModel = mongoose.model('category',categorySchema)
