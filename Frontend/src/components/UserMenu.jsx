@@ -13,6 +13,7 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { MdCategory } from "react-icons/md";
 import { BiSolidCategory } from "react-icons/bi";
 import { IoMdCloudUpload } from "react-icons/io";
+import isAdmin from '../utils/isAdmin'
 
 const UserMenu = ({ close }) => {
     const user = useSelector((state) => state.user);
@@ -67,8 +68,9 @@ const UserMenu = ({ close }) => {
                 </div>
 
                 <div>
-                    <p className="text-sm font-semibold leading-none">
+                    <p className="text-sm font-semibold  leading-none">
                         {user?.name || "User"}
+                    <span className='ml-2 text-xs text-red-400'>{user.role === "ADMIN" ? "(Admin)" : "" }</span>
                     </p>
                     <p className="text-xs text-gray-500">
                         {user?.email || user?.mobile}
@@ -81,6 +83,9 @@ const UserMenu = ({ close }) => {
 
             {/* Menu Links */}
             <div className="flex flex-col text-sm">
+                {
+                    isAdmin(user.role) && (
+                        
                 <Link
                     onClick={handleClose}
                     to="/dashboard/category"
@@ -89,6 +94,11 @@ const UserMenu = ({ close }) => {
                     <MdCategory size={16} />
                     Category
                 </Link>
+                    )
+                }
+                {
+                    isAdmin(user.role) && (
+                        
                 <Link
                     onClick={handleClose}
                     to="/dashboard/subcategory"
@@ -97,6 +107,12 @@ const UserMenu = ({ close }) => {
                     <BiSolidCategory size={16} />
                     Sub Category
                 </Link>
+                    )
+                }
+
+                {
+                    isAdmin(user.role) && (
+                        
                 <Link
                     onClick={handleClose}
                     to="/dashboard/uploadproduct"
@@ -105,6 +121,11 @@ const UserMenu = ({ close }) => {
                     <IoMdCloudUpload size={16} />
                     Upload Product
                 </Link>
+                    )
+                }
+                {
+                    isAdmin(user.role) && (
+                        
                 <Link
                     onClick={handleClose}
                     to="/dashboard/product"
@@ -113,6 +134,9 @@ const UserMenu = ({ close }) => {
                     <AiOutlineProduct size={16} />
                     Product
                 </Link>
+                    )
+                }
+
 
 
 

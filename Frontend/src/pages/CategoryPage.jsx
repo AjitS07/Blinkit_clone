@@ -9,6 +9,7 @@ import EditCategory from '../components/EditCategory.jsx'
 import ConfirmBox from '../components/ConfirmBox.jsx'
 import toast from 'react-hot-toast'
 import AxiosToastError from '../utils/AxiosToastError.js'
+import { useSelector } from 'react-redux'
 
 const CategoryPage = () => {
   const [openUploadCategory, setOpenUploadCategory] = useState(false)
@@ -22,6 +23,8 @@ const CategoryPage = () => {
   const [deleteCategory, setDeleteCategory] = useState({
     _id: ""
   })
+  const allCategory = useSelector(state => state.product.allCategory)
+
 
   const fetchCategory = async () => {
     try {
@@ -44,8 +47,9 @@ const CategoryPage = () => {
   }
   useEffect(() => {
     fetchCategory()
+    setcategoryData(allCategory)
 
-  }, [])
+  }, [allCategory])
 
   const handleDeleteCategory = async() => {
       try {
@@ -70,7 +74,7 @@ const CategoryPage = () => {
     <section className="w-full">
       {/* Header */}
       <div className="p-3 bg-white border-b border-gray-200 flex items-center justify-between sticky top-0 z-10">
-        <h2 className="font-semibold text-base md:text-lg">Category</h2>
+        <h2 className="font-semibold text-blue-400 text-base md:text-lg">CATEGORY</h2>
 
         <button
           onClick={() => setOpenUploadCategory(true)}

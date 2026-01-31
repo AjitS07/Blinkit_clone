@@ -70,7 +70,12 @@ const SummaryApi = {
     deleteCategory : {
         url : '/api/category/delete',
         method : 'delete'
+    },
+    createSubcategory : {
+        url : '/api/sucategory/create',
+        method : 'post'
     }
+
 }
 
 export default SummaryApi
