@@ -8,29 +8,54 @@ import fetchUserDetails from './utils/fetchUserDetails'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setUserDetails } from './store/userSlice'
+import {setAllCategory} from './store/productSlice'
+import Axios from './utils/Axios.js'
+import SummaryApi from './common/SummaryApi'
 
 
 
 function App() {
 
   const dispatch = useDispatch()
-  
+
 
   const fetchUser = async () => {
     const userData = await fetchUserDetails()
-    if(userData){
-    dispatch(setUserDetails(userData.data))
+    if (userData) {
+      dispatch(setUserDetails(userData.data))
+    }
+  }
+
+  const fetchCategory = async () => {
+    try {
+
+      const response = await Axios({
+        ...SummaryApi.getCategory
+
+      })
+      const { data: responseData } = response
+      if (responseData.success) {
+        dispatch(setAllCategory(response.data.data))
+        // setcategoryData(response.data.data)
+      }
+
+    } catch (error) {
+
+    } finally {
+      // setLoading(false)
     }
   }
 
 
-  useEffect(() => {
-  const token = localStorage.getItem("accesstoken");
 
-  if (token) {
-    fetchUser();   // ✔ sirf login hone pe
-  }
-}, []);
+  useEffect(() => {
+    fetchCategory()
+    const token = localStorage.getItem("accesstoken");
+
+    if (token) {
+      fetchUser();   // ✔ sirf login hone pe
+    }
+  }, []);
 
 
   return (

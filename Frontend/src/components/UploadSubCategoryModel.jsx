@@ -3,7 +3,7 @@ import { IoClose } from 'react-icons/io5'
 import { CiWarning } from "react-icons/ci";
 import uploadImage from '../utils/UploadImage';
 import { useSelector } from 'react-redux';
-import Axios from '../utils/Axios';
+import Axios from '../utils/Axios.js';
 import SummaryApi from '../common/SummaryApi';
 import toast from 'react-hot-toast';
 import AxiosToastError from '../utils/AxiosToastError';
@@ -26,7 +26,7 @@ const UploadSubCategoryModel = ({ close }) => {
         })
     }
     const handleUploadSubCategoryImage = async (e) => {
-        const file = e.target.file[0]
+        const file = e.target.files[0]
         if (!file) {
             return
         }
@@ -55,9 +55,10 @@ const UploadSubCategoryModel = ({ close }) => {
             const response = await Axios({
                 ...SummaryApi.createSubcategory,
                 data : subCategoryData
-            })
-            const {data : responseData} = response
-            if(response.success){
+              })
+              const {data : responseData} = response
+              console.log("subcategory response", responseData)
+            if(responseData.success){
                 toast.success(responseData.message)
                 if(close){
                     close()
