@@ -40,7 +40,7 @@ app.get("/",(request,response)=>{
 app.use('/api/user',userRouter)
 app.use("/api/category",categoryRouter)
 app.use("/api/file",uploadRouter)
-app.use("/api/sucategory",subCategoryRouter)
+app.use("/api/subcategory",subCategoryRouter)
 
 
 connectDB().then(()=>{

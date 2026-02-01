@@ -1,9 +1,10 @@
 import {Router} from "express"
-import { AddSubcategoryController } from "../controllers/subCategory.controller"
+import { AddSubcategoryController, getSubCategoryController } from "../controllers/subCategory.controller.js"
 import auth from "../middleware/auth.js"
 
 const subCategoryRouter =Router()
 subCategoryRouter.post('/create',auth,AddSubcategoryController)
+subCategoryRouter.post('/get',getSubCategoryController)
 
 
 export default subCategoryRouter
