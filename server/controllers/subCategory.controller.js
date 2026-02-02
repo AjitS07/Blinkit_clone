@@ -54,3 +54,35 @@ export const getSubCategoryController = async(request,response)=>{
     }
 }
 
+export const updateSubCategoryControllerr = async(request,response)=>{
+    try {
+        const {_id,name,image,category} = request.body
+        const checksub = await subCategoryModel.findById(_id)
+        if(!checksub){
+            return response.status(400).json({
+                message : "Check your ID",
+                error : true,
+                success : false
+            })
+        }
+        const updateSubCategory = await subCategoryModel.findByIdAndUpdate(_id,{
+            name,
+            image,
+            category
+        })
+        return response.json({
+            message : "Update successfully",
+            data : updateSubCategory,
+            error : false,
+            success : true
+        })
+    } catch (error) {
+        return response.status(500).json({
+            message : error.message || error,
+            error: true,
+            success : false
+        })
+        
+    }
+}
+
