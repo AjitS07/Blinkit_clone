@@ -78,6 +78,10 @@ const SummaryApi = {
     getSubCategory : {
         url : '/api/subcategory/get',
         method :'post'
+    },
+    updateSubcategory : {
+        url : '/api/subcategory/update',
+        method :'put'
     }
 
 }

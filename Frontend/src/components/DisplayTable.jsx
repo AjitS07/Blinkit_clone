@@ -5,7 +5,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { FiEdit, FiTrash2 } from 'react-icons/fi';
+
 
 
 
@@ -50,18 +50,7 @@ const DisplayTable = ({ data, column }) => {
               ))}
 
               {/* Floating action buttons (appear on row hover) */}
-              <td className="absolute right-0 top-0 h-full flex items-center pr-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <FiEdit
-                  className="text-blue-600 cursor-pointer hover:text-blue-800 mr-2"
-                  size={16}
-                  onClick={() => handleEdit(row.original)}
-                />
-                <FiTrash2
-                  className="text-red-600 cursor-pointer hover:text-red-800"
-                  size={16}
-                  onClick={() => handleDelete(row.original)}
-                />
-              </td>
+              
             </tr>
           ))}
         </tbody>
