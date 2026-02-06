@@ -8,6 +8,8 @@ import { createColumnHelper } from '@tanstack/react-table'
 import ViewImage from '../components/ViewImage.jsx'
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import EditSubCategory from '../components/EditSubCategory.jsx'
+import ConfirmBox from '../components/ConfirmBox.jsx'
+import toast from 'react-hot-toast'
 const SubCategoryPage = () => {
   const [openAddSubCategory, setOpenAddSubCategory] = useState(false)
   const [data, setData] = useState([])
@@ -18,6 +20,10 @@ const SubCategoryPage = () => {
   const [editSubData,setEditSubData] = useState({
     id : ""
   })
+  const [deleteSubCategory,setDeleteSubCategory] = useState({
+    _id : ""
+  })
+  const [openDeleteConfirmBox,setOpenDeleteConfirmBox] = useState(false)
 
   const fetchSubCategory = async () => {
 
@@ -100,7 +106,12 @@ const SubCategoryPage = () => {
                 size={16}
               />
             </button>
-            <button>
+            <button 
+              onClick={()=>{
+                setOpenDeleteConfirmBox(true)
+                setDeleteSubCategory(row.original)
+              }}
+            >
               <FiTrash2
                 className="text-red-600 cursor-pointer hover:text-red-800 "
                 size={16}
@@ -112,6 +123,27 @@ const SubCategoryPage = () => {
     })
 
   ]
+  const handleDeleteSubCategory = async()=>{
+    try {
+      const response = await Axios({
+        ...SummaryApi.deleteSubCategory,
+        data : deleteSubCategory
+      })
+      const {data:responseData} = response
+      if(responseData.success){
+        toast.success(responseData.message),
+        fetchSubCategory()
+        setOpenDeleteConfirmBox(false)
+        setDeleteSubCategory({_id:""})
+      }
+
+      
+    } catch (error) {
+      AxiosToastError(error)
+      
+    }
+
+  }
 
   return (
     <section>
@@ -126,14 +158,16 @@ const SubCategoryPage = () => {
           Add Subcategory
         </button>
       </div>
-      <div>
+      <div className='overflow-auto w-full max-w-[95vw]'>
         <DisplayTable data={data}
           column={column} />
 
       </div>
       {
         openAddSubCategory && (
-          <UploadSubCategoryModel close={() => setOpenAddSubCategory(false)} />
+          <UploadSubCategoryModel close={() => setOpenAddSubCategory(false)}
+          fetchData = {fetchSubCategory}
+           />
         )
       }
       {
@@ -147,6 +181,16 @@ const SubCategoryPage = () => {
          close={()=>setOpenSubEdit(false)} 
          fetchData={fetchSubCategory}
          />
+      }
+      {
+        openDeleteConfirmBox && (
+          <ConfirmBox
+          cancel={()=>setOpenDeleteConfirmBox(false)}
+          close={()=>setOpenDeleteConfirmBox(false)}
+          confirm={handleDeleteSubCategory}
+          
+          />
+        )
       }
     </section>
   )

@@ -23,36 +23,36 @@ const CategoryPage = () => {
   const [deleteCategory, setDeleteCategory] = useState({
     _id: ""
   })
-  const allCategory = useSelector(state => state.product.allCategory)
+  // const allCategory = useSelector(state => state.product.allCategory)
 
-  useEffect(()=>{
-    setcategoryData(allCategory)
-  },[allCategory])
+  // useEffect(()=>{
+  //   setcategoryData(allCategory)
+  // },[allCategory])
 
 
-  // const fetchCategory = async () => {
-  //   try {
-  //     setLoading(true)
-  //     const response = await Axios({
-  //       ...SummaryApi.getCategory
+  const fetchCategory = async () => {
+    try {
+      setLoading(true)
+      const response = await Axios({
+        ...SummaryApi.getCategory
 
-  //     })
-  //     const { data: responseData } = response
-  //           if (responseData.success) {
-  //       setcategoryData(response.data.data)
-  //     }
+      })
+      const { data: responseData } = response
+            if (responseData.success) {
+        setcategoryData(response.data.data)
+      }
 
-  //   } catch (error) {
+    } catch (error) {
 
-  //   } finally {
-  //     setLoading(false)
-  //   }
-  // }
-  // useEffect(() => {
-  //   fetchCategory()
+    } finally {
+      setLoading(false)
+    }
+  }
+  useEffect(() => {
+    fetchCategory()
     
 
-  // }, [])
+  }, [])
 
   const handleDeleteCategory = async() => {
       try {
@@ -86,13 +86,9 @@ const CategoryPage = () => {
           Add Category
         </button>
       </div>
-
       {/* Loader */}
-
-
       {/* No Data */}
       {!categoryData?.length && !loading && <NoData />}
-
       {/* Category Grid */}
       <div
         className="

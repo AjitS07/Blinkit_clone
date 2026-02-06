@@ -9,13 +9,16 @@ const Dashboard = () => {
     return (
         <section className='bg-white'>
 
-            <div className='container  mx-auto p-3 grid lg:grid-cols-[250px_1fr]'>
+            <div className='w-full  mx-auto max-w-[1400px] grid lg:grid-cols-[250px_1fr]'>
                 {/* left for menu */}
-                <div className='py-2 sticky max-h-[calc(100vh-100px)] top-24 overflow-y-auto hidden lg:block border-r border-neutral-300'>
+                <div className='p-2 sticky h-[calc(100vh-64px)] top-16 overflow-y-auto hidden lg:block border-r border-neutral-300'>
+                    <div className="h-full overflow-y-auto  scrollbar-thin">
+
                     <UserMenu />
+                    </div>
                 </div>
                 {/* right for content */}
-                <div className=' bg-white min-h-[75vh]'>
+                <div className=' bg-white min-h-[calc(100vh-64px)]'>
                     <Outlet/>
                 </div>
             </div>

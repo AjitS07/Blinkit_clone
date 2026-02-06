@@ -40,7 +40,7 @@ const DisplayTable = ({ data, column }) => {
           {table.getRowModel().rows.map((row, index) => (
             <tr key={row.id} className="relative group hover:bg-neutral-100">
               {/* Serial Number */}
-              <td className='border border-neutral-400 px-2 py-1'>{index + 1}</td>
+              <td className='border border-neutral-400   text-center align-middle px-2 py-1'>{index + 1}</td>
 
               {/* Other cells */}
               {row.getVisibleCells().map(cell => (

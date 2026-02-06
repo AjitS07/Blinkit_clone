@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+    user: JSON.parse(localStorage.getItem("user")) || null,
+    loading: false,
+};
+
 const initialValue = {
     _id: "",
     name: "",
@@ -34,11 +39,11 @@ const userSlice = createSlice({
             state.role = action.payload?.role
 
         },
-        updatedAvatar : (state,action) =>{
+        updatedAvatar: (state, action) => {
             state.avatar = action.payload
 
         },
-        logout : (state,action)=>{
+        logout: (state, action) => {
             state._id = ""
             state.name = ""
             state.email = ""
@@ -55,6 +60,6 @@ const userSlice = createSlice({
     }
 })
 
-export const { setUserDetails , logout,updatedAvatar} = userSlice.actions
+export const { setUserDetails, logout, updatedAvatar } = userSlice.actions
 
 export default userSlice.reducer

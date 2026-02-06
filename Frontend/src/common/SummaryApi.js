@@ -22,66 +22,74 @@ const SummaryApi = {
         url: '/api/user/verify-forgot-password-otp',
         method: 'put'
     },
-    reset_password :
+    reset_password:
     {
-        url : '/api/user/reset-password',
+        url: '/api/user/reset-password',
         method: 'put'
 
     },
-    refresh_token : {
-        url : '/api/user/refresh-token',
-        method : 'post'
+    refresh_token: {
+        url: '/api/user/refresh-token',
+        method: 'post'
 
     },
-    userDetails : {
-        url : '/api/user/user-details',
-        method : 'get'
+    userDetails: {
+        url: '/api/user/user-details',
+        method: 'get'
     },
-    logout :{
-        url :'/api/user/logout',
-        method : 'get'
+    logout: {
+        url: '/api/user/logout',
+        method: 'get'
     },
     uploadAvatar:
     {
-        url : '/api/user/upload-avatar',
-        method : 'put'
+        url: '/api/user/upload-avatar',
+        method: 'put'
 
     },
-    userUpdateDetails:{
+    userUpdateDetails: {
         url: '/api/user/update-user',
-        method : 'put'
+        method: 'put'
     },
-    addCategory : {
-        url : '/api/category/add-category',
-        method : 'post'
+    addCategory: {
+        url: '/api/category/add-category',
+        method: 'post'
     },
-    uploadImage : {
-        url : '/api/file/upload',
-        method : 'post'
+    uploadImage: {
+        url: '/api/file/upload',
+        method: 'post'
     },
-    getCategory : {
-        url : '/api/category/get',
-        method : 'get'
+    getCategory: {
+        url: '/api/category/get',
+        method: 'get'
     },
-    updateCategory : {
-        url : '/api/category/update',
-        method : 'put'
+    updateCategory: {
+        url: '/api/category/update',
+        method: 'put'
     },
-    deleteCategory : {
-        url : '/api/category/delete',
-        method : 'delete'
+    deleteCategory: {
+        url: '/api/category/delete',
+        method: 'delete'
     },
-    createSubcategory : {
-        url : '/api/subcategory/create',
-        method : 'post'
+    createSubcategory: {
+        url: '/api/subcategory/create',
+        method: 'post'
     },
-    getSubCategory : {
-        url : '/api/subcategory/get',
-        method :'post'
+    getSubCategory: {
+        url: '/api/subcategory/get',
+        method: 'post'
     },
-    updateSubcategory : {
-        url : '/api/subcategory/update',
-        method :'put'
+    updateSubcategory: {
+        url: '/api/subcategory/update',
+        method: 'put'
+    },
+    deleteSubCategory: {
+        url: '/api/subcategory/deletesub',
+        method: 'delete'
+    },
+    createProduct: {
+        url: '/api/product/create',
+        method: 'post'
     }
 
 }

@@ -33,7 +33,7 @@ const ConfirmBox = ({ cancel, confirm, close }) => {
           <button
             onClick={cancel}
             className="flex-1 py-2 rounded-lg border border-neutral-300 text-neutral-700
-            hover:bg-neutral-100 transition"
+            hover:bg-neutral-100 transition cursor-pointer"
           >
             Cancel
           </button>
@@ -41,7 +41,7 @@ const ConfirmBox = ({ cancel, confirm, close }) => {
           <button
             onClick={confirm}
             className="flex-1 py-2 rounded-lg bg-red-600 text-white font-semibold
-            hover:bg-red-500 transition"
+            hover:bg-red-500 transition cursor-pointer"
           >
             Delete
           </button>

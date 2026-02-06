@@ -1,9 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import isAdmin from "../utils/isAdmin";
+import Loading from "../components/Loading";
 
 const AdminPermision = ({ children }) => {
   const user = useSelector((state) => state.user);
+  if (user?.role === "") {
+   return <Loading />;
+  }
 
   if (isAdmin(user?.role)) {
     return children;
