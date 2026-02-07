@@ -1,6 +1,6 @@
 import ProductModel from '../models/product.model.js'
 
-export const createProductController = async(request, response) => {
+export const createProductController = async (request, response) => {
     try {
         const {
             name,
@@ -36,12 +36,49 @@ export const createProductController = async(request, response) => {
         })
         const saveProduct = await product.save()
         return response.json({
-            message : "Product Add Successfuly",
+            message: "Product Add Successfuly",
             error: false,
-            success : true,
-            data : saveProduct
+            success: true,
+            data: saveProduct
         })
 
+    } catch (error) {
+        return response.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+
+    }
+}
+
+export const getProductController = async (request, response) => {
+    try {
+        let { page, limit, search } = request.query
+        if (!page) {
+            page = 1
+        }
+        if (!limit) {
+            limit = 10
+        }
+        const query = search ? {
+            $text: {
+                $search: search
+            }
+        } : {}
+        const skip = (page - 1) * limit
+        const [data, totalCount] = await Promise.all([
+            ProductModel.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit),
+            ProductModel.countDocuments(query)
+        ])
+        return response.json({
+            message: "Product Data",
+            error: false,
+            success: true,
+            totalCount: totalCount,
+            totalNoPage: Math.ceil(totalCount / limit),
+            data: data
+        })
     } catch (error) {
         return response.status(500).json({
             message: error.message || error,
