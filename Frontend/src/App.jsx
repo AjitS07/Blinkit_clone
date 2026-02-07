@@ -19,11 +19,12 @@ import SummaryApi from './common/SummaryApi'
 function App() {
 
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
 
 
   const fetchUser = async () => {
     const userData = await fetchUserDetails()
-    if (userData) {
+    if (userData?.data) {
       dispatch(setUserDetails(userData.data))
     }
   }

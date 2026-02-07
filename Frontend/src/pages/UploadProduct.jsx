@@ -109,8 +109,7 @@ const UploadProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("data", data)
-    try {
+       try {
       const response = await Axios({
         ...SummaryApi.createProduct,
         data: data
@@ -216,14 +215,14 @@ const UploadProduct = () => {
               </label>
 
               {/* display Upload image */}
-              <div className=' flex flex-wrap gap-4'>
+              <div className=' flex flex-wrap gap-4 '>
                 {
                   data.image.map((img, index) => {
                     return (
-                      <div key={img + index} className=' mt-1 h-20 w-20 min-w-20 border rounded relative group'>
+                      <div key={img + index} className=' shadow-md mt-1 h-20 w-20 min-w-20 bg-blue-50  rounded relative group'>
                         <img src={img} alt={img}
                           onClick={() => setViewImageUrl(img)}
-                          className='w-full h-full object-scale-down cursor-pointer' />
+                          className='w-full h-full object-scale-down  rounded-md cursor-pointer' />
 
                         {/* button */}
                         <div className=" absolute bottom-0 right-0 p-1 h-7 bg-white rounded hidden group-hover:block ">
